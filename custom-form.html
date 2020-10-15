@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Form Registrasi</title>
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+HK&family=Source+Code+Pro&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Monda&display=swap" rel="stylesheet">
+
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.17.0/plugins/CSSPlugin.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.17.0/easing/EasePack.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.17.0/TweenLite.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TimelineLite.min.js"></script>
+	<style type="text/css">
+		* {
+			font-family: 'Noto Sans HK', sans-serif;
+			box-sizing: border-box;
+		}
+
+		html, body {
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			background: #EDE7F6;
+			scroll-behavior: smooth;
+		}
+
+		fieldset {
+			border: unset;
+			border-radius: 5px;
+		}
+
+		legend {
+			/*text-align: center;*/
+		}
+
+		small {
+			font-size: 11px;
+			padding: 0;
+			margin: 0;
+			text-overflow: ellipsis !important;
+		}
+
+		select {
+			width: 18% !important;
+			padding: 5px !important;
+		}
+
+		.header {
+			width: 100%;
+			height: 230px;
+			z-index: -1;
+			top: 0;
+			left: 0;
+			position: absolute;
+			background: #41295a;  /* fallback for old browsers */
+			background: -webkit-linear-gradient(to right, #2F0743, #41295a);  /* Chrome 10-25, Safari 5.1-6 */
+			background: linear-gradient(to right, #2F0743, #41295a); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+			filter: brightness(1.4);
+
+		}
+
+		.container {
+			background-color: rgba(255, 255, 255, .99);
+			width: 45%;
+			margin: 50px auto;
+			padding: 20px 28px 28px;
+			border-radius: 6px;
+			box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+		}
+
+		.legend-1 {
+			font-weight: bold;
+			font-size: 28px;
+			display: block;
+		}
+
+		.legend-2 {
+			font-weight: lighter;
+			color: rgba(0, 0, 0, .5);
+		}
+
+		.container table {
+			width: 95%;
+			margin: 0 auto;
+		}
+
+		.container td {
+			text-align: center;
+			padding: 5px;
+		}
+
+		.container tr td:first-child, .container tr td:last-child {
+			text-align: left;
+		}
+
+		.container input[type=text], .container input[type=password], .container select {
+			width: 100%;
+			padding: 12px 20px;
+			margin: 8px 0;
+			display: inline-block;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+			box-sizing: border-box;
+		}
+
+		.container input[type=submit] {
+			width: 100%;
+			background-color: #4CAF50;
+			color: white;
+			padding: 14px 20px;
+			margin: 8px 0;
+			border: none;
+			border-radius: 4px;
+			cursor: pointer;
+		}
+
+		.container input[type=submit]:hover {
+			background-color: #45a049;
+		}
+
+		.text-birthday {
+			width: 40% !important;
+			font-size: 11px;
+			padding: 0;
+			margin: 0;
+			text-overflow: ellipsis !important;
+		}
+
+		.animate-button {
+			display: flex;
+			height: 100%;
+			animation: hue-rotate 10s linear infinite;
+		}
+
+		.button {
+			-webkit-font-smoothing: antialiased;
+			background-color: #222;
+			border: none;
+			border-radius: 8px;
+			color: #fff;
+			display: inline-block;
+			font-size: 11px;
+			text-decoration: none;
+			user-select: none;
+			letter-spacing: 1px;
+			color: white;
+			padding: 14px 28px;
+			text-transform: uppercase;
+			font-weight: bold;
+			font-family: 'Monda', sans-serif;
+			transition: all 0.1s ease-out;
+		}
+
+		.button:hover {
+			background-color: #222;
+			color: #fff;
+		}
+
+		.button:active {
+		  transform: scale(0.95);
+		}
+
+		.button--bubble {
+			position: relative;
+			z-index: 2;
+			color: white;
+			background: none;
+		}
+
+		.button--bubble:hover {
+			background: none;
+		}
+
+		.button--bubble:hover + .button--bubble__effect-container .circle {
+			background: #222;
+		}
+
+		.button--bubble:hover + .button--bubble__effect-container .button {
+			background: #222;
+		}
+
+		.button--bubble:active + .button--bubble__effect-container {
+			transform: scale(0.95);
+		}
+
+		.button--bubble__container {
+			margin: auto;
+			position: relative;
+			display: inline-block;
+		}
+
+		.button--bubble__container .effect-button {
+			position: absolute;
+			width: 50%;
+			height: 25%;
+			top: 50%;
+			left: 25%;
+			z-index: 1;
+			transform: translateY(-50%);
+			background: #222;
+			transition: background 0.1s ease-out;
+		}
+
+		.button--bubble__effect-container {
+			position: absolute;
+			display: block;
+			width: 200%;
+			height: 400%;
+			top: -150%;
+			left: -50%;
+			-webkit-filter: url("#goo");
+			filter: url("#goo");
+			transition: all 0.1s ease-out;
+			pointer-events: none;
+		}
+
+		.button--bubble__effect-container .circle {
+			position: absolute;
+			width: 25px;
+			height: 25px;
+			border-radius: 15px;
+			background: #222;
+			transition: background 0.1s ease-out;
+		}
+
+		.button--bubble__effect-container .circle.top-left {
+			top: 40%;
+			left: 27%;
+		}
+
+		.button--bubble__effect-container .circle.bottom-right {
+			bottom: 40%;
+			right: 27%;
+		}
+
+		.goo {
+			position: absolute;
+			visibility: hidden;
+			width: 1px;
+			height: 1px;
+		}
+
+		.button--bubble__container {
+			top: 50%;
+			margin-top: -25px;
+		}
+
+		@keyframes hue-rotate {
+	  		from {
+			    -webkit-filter: hue-rotate(0);
+			    -moz-filter: hue-rotate(0);
+			    -ms-filter: hue-rotate(0);
+			    filter: hue-rotate(0);
+		  	}
+		  	to {
+				-webkit-filter: hue-rotate(360deg);
+				-moz-filter: hue-rotate(360deg);
+				-ms-filter: hue-rotate(360deg);
+				filter: hue-rotate(360deg);
+		  	}
+		}
+	</style>
+</head>
+<body>
+	<div class="header"></div>
+
+	<div class="container">		
+		<!-- <h2>Form Registrasi</h2> -->
+
+		<fieldset>
+			<legend>
+				<span class="legend-1">Sign Up</span>
+				<span class="legend-2">It's free and always be</span>
+			</legend>
+
+			<table cellspacing="0">
+				<thead>
+					<!-- No head -->
+				</thead>
+				<tbody>
+					<tr>
+						<td><input type="text" name="form-name" placeholder="First Name"></td>
+						<td><input type="password" name="form-password" placeholder="Last Name"></td>
+					</tr>
+
+					<tr>
+						<td colspan="2"><input type="text" name="form-name" placeholder="Your Email"></td>
+					</tr>
+
+					<tr>
+						<td colspan="2"><input type="password" name="form-password" placeholder="Re-enter Email"></td>
+					</tr>
+
+					<tr>
+						<td colspan="2"><input type="password" name="form-password" placeholder="New Password"></td>
+					</tr>
+				
+					<tr>
+						<td colspan="2">
+							<legend><strong>Birthday</strong></legend>
+
+							<select>
+								<option>Month</option>
+								<option>January</option>
+								<option>February</option>
+								<option>March</option>
+								<option>April</option>
+								<option>May</option>
+								<option>June</option>
+								<option>July</option>
+								<option>August</option>
+								<option>September</option>
+								<option>October</option>
+								<option>November</option>
+								<option>December</option>
+							</select>
+
+							<select>
+								<option>Day</option>
+							</select>
+
+							<select>
+								<option>Year</option>
+							</select>
+
+							<span class="text-birthday"><a href="#">Why do I need to provide my br birthday?</a></span>
+						</td>
+					</tr>
+
+					<tr>
+						<td colspan="2">
+							<input type="radio" name="gender">Female
+							<input type="radio" name="gender">Male
+						</td>
+					</tr>
+
+					<tr>
+						<td colspan="2">
+							<small>By clicking Sign Up, you agree to our <a href="#">Terms</a> and that you have read our <a href="#">Data Use Policy</a>, including our <a href="#">Cookie Use</a>.</small>
+						</td>
+					</tr>
+
+					<tr>
+						<td>&nbsp;</td>
+					</tr>
+
+					<tr>
+						<td colspan="3">
+							<div class="animate-button">
+								<svg xmlns="http://www.w3.org/2000/svg" version="1.1" class="goo">
+									<defs>
+										<filter id="goo">
+											<feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
+											<feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9" result="goo" />
+											<feComposite in="SourceGraphic" in2="goo"/>
+										</filter>
+									</defs>
+								</svg>
+
+								<span class="button--bubble__container">
+									<a href="#campaign" class="button button--bubble">
+										Sign Up
+									</a>
+
+									<span class="button--bubble__effect-container">
+										<span class="circle top-left"></span>
+										<span class="circle top-left"></span>
+										<span class="circle top-left"></span>
+
+										<span class="button effect-button"></span>
+
+										<span class="circle bottom-right"></span>
+										<span class="circle bottom-right"></span>
+										<span class="circle bottom-right"></span>
+									</span>
+								</span>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</fieldset>
+	</div>
+
+	<script type="text/javascript">
+		$('.button--bubble').each(function() {
+			var $circlesTopLeft = $(this).parent().find('.circle.top-left');
+			var $circlesBottomRight = $(this).parent().find('.circle.bottom-right');
+
+			var tl = new TimelineLite();
+			var tl2 = new TimelineLite();
+
+			var btTl = new TimelineLite({ paused: true });
+
+			tl.to($circlesTopLeft, 1.2, { x: -25, y: -25, scaleY: 2, ease: SlowMo.ease.config(0.1, 0.7, false) });
+			tl.to($circlesTopLeft.eq(0), 0.1, { scale: 0.2, x: '+=6', y: '-=2' });
+			tl.to($circlesTopLeft.eq(1), 0.1, { scaleX: 1, scaleY: 0.8, x: '-=10', y: '-=7' }, '-=0.1');
+			tl.to($circlesTopLeft.eq(2), 0.1, { scale: 0.2, x: '-=15', y: '+=6' }, '-=0.1');
+			tl.to($circlesTopLeft.eq(0), 1, { scale: 0, x: '-=5', y: '-=15', opacity: 0 });
+			tl.to($circlesTopLeft.eq(1), 1, { scaleX: 0.4, scaleY: 0.4, x: '-=10', y: '-=10', opacity: 0 }, '-=1');
+			tl.to($circlesTopLeft.eq(2), 1, { scale: 0, x: '-=15', y: '+=5', opacity: 0 }, '-=1');
+
+			var tlBt1 = new TimelineLite();
+			var tlBt2 = new TimelineLite();
+
+			tlBt1.set($circlesTopLeft, { x: 0, y: 0, rotation: -45 });
+			tlBt1.add(tl);
+
+			tl2.set($circlesBottomRight, { x: 0, y: 0 });
+			tl2.to($circlesBottomRight, 1.1, { x: 30, y: 30, ease: SlowMo.ease.config(0.1, 0.7, false) });
+			tl2.to($circlesBottomRight.eq(0), 0.1, { scale: 0.2, x: '-=6', y: '+=3' });
+			tl2.to($circlesBottomRight.eq(1), 0.1, { scale: 0.8, x: '+=7', y: '+=3' }, '-=0.1');
+			tl2.to($circlesBottomRight.eq(2), 0.1, { scale: 0.2, x: '+=15', y: '-=6' }, '-=0.2');
+			tl2.to($circlesBottomRight.eq(0), 1, { scale: 0, x: '+=5', y: '+=15', opacity: 0 });
+			tl2.to($circlesBottomRight.eq(1), 1, { scale: 0.4, x: '+=7', y: '+=7', opacity: 0 }, '-=1');
+			tl2.to($circlesBottomRight.eq(2), 1, { scale: 0, x: '+=15', y: '-=5', opacity: 0 }, '-=1');
+
+			tlBt2.set($circlesBottomRight, { x: 0, y: 0, rotation: 45 });
+			tlBt2.add(tl2);
+
+			btTl.add(tlBt1);
+			btTl.to($(this).parent().find('.button.effect-button'), 0.8, { scaleY: 1.1 }, 0.1);
+			btTl.add(tlBt2, 0.2);
+			btTl.to($(this).parent().find('.button.effect-button'), 1.8, { scale: 1, ease: Elastic.easeOut.config(1.2, 0.4) }, 1.2);
+
+			btTl.timeScale(2.6);
+
+			$(this).on('mouseover', function() {
+				btTl.restart();
+			});
+		});
+	</script>
+</body>
+</html>
